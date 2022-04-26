@@ -11,10 +11,11 @@
 
         <a-assets>
 
-            <a-asset-items id="bear" src="assets/scene.gltf" scale="0.5 0.5 0.5"></a-asset-items>
+            <a-asset-items id="bear" src="assets/scene.gltf"></a-asset-items>
 
         </a-assets>
-        <a-entity gltf-model="#bear"></a-entity>
+        <a-entity gltf-model="#bear" scale="0.5 0.5 0.5" position="0 2 -3"></a-entity>
+        <a-entity camera look-controls position="0 1.6 0"></a-entity>
       </a-scene>
   
   </body>
