@@ -11,13 +11,18 @@
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <!-- Load local teleport functionality -->
 <script src="teleport.js"></script>
-  <!-- script for physics -->
-<!-- Get deprecated three.js functionalty needed for physics -->
+ <!-- Get deprecated three.js functionalty needed for physics -->
 <!-- https://github.com/n5ro/aframe-physics-system/issues/187 -->
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
 
 <!-- Get aframe physics (needs three.js geometry) -->
 <script src="//cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v2.1.0/dist/aframe-physics-system.min.js"></script>
+
+<!-- Get aframe physics (needs three.js geometry) -->
+<script src="//cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v2.1.0/dist/aframe-physics-system.min.js"></script>
+
+<!-- Load local teleport functionality -->
+<script src="teleport.js"></script>
 
 </head>
 
@@ -28,29 +33,74 @@
   <!-- script test console log-->
 
   <script>
+
+    // Test phase shift
+    AFRAME.registerComponent('phase-shift', {
+      init: function () {
+        var el = this.el
+        el.addEventListener('gripdown', function () {
+          el.setAttribute('collision-filter', { collisionForces: true })
+        })
+        el.addEventListener('gripup', function () {
+          el.setAttribute('collision-filter', { collisionForces: false })
+        })
+      }
+    })
+
+
+    /** 
+     * Listen to input 
+     * 
+     */
     AFRAME.registerComponent("input-listen", {
       init: function () {
-        //Called when trigger is pressed 
-        //squeeze button in WebXR debugger
+        this.el.grab = false; // Set grab var to not grabbed
+
+
         this.el.addEventListener("triggerdown", function (e) {
           console.log("triggerdown", e.target.id);
+          this.grab = true; // Grab something 
         });
-        this.el.addEventListener("triggerup", function (e) {
-          console.log("triggerup", e.target.id);
+        this.el.addEventListener('tirggerup', function (e) {
+          console.log("TriggerUp", e.target.id);
+          this.grab = false; // Release something
         });
-
-    
-        //Called when thumbstickchanged  
-        //select button in WebXR debugger
         this.el.addEventListener("thumbstickchanged", function (e) {
           console.log("thumbstickchanged", e.target.id);
         });
-          }
+
+        /**
+         * Listen to thumbstickdown event
+         * Show a target circle
+         */
+        this.el.addEventListener("thumbstickdown", function (e) {
+          console.log("thumbstickdown", e.target.id);
+          this.emit('teleportstart');		// Show the circle
+        });
+
+        /**
+         * Listen to thumbstickup event
+         * Teleport to the target circle
+         */
+        this.el.addEventListener("thumbstickup", function (e) {
+          console.log("thumbstickup", e.target.id);                    
+          this.emit('teleportend');		// Jump to circle
+        });
+        // this.el.addEventListener("hit", function(e){
+        //   console.log("HIT!", e.target.id);
+        //   if( this.grab == true){
+        //     console.log("hit");
+        //     console.log(hitEl.attributes.color);
+        //     hitEl.attributes.color.value = "purple";
+        //     console.log(hitEl.attributes.color);
+        //   }
+        // });
+      }
     });
 
-    
-        
-        
+
+  </script>
+
 
 
     </script>
@@ -66,25 +116,23 @@
       <a-entity id="head" camera wasd-controls look-controls position="0 1.6 0"></a-entity>
       <a-entity
         id="leftController"
-        input-listen
         static-body="shape: sphere; sphereRadius: 0.02;"
         laser-controls="hand: left"
         raycaster="lineColor: red; far:2"
         sphere-collider="objects: .throwable"
         grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
-        
+        input-listen
       ></a-entity>
       <a-entity
         id="rightController"
-        input-listen
         static-body="shape: sphere; sphereRadius: 0.02;"
         laser-controls="hand: right"
         raycaster="lineColor: red; far:2"
         sphere-collider="objects: .throwable"
         grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
-      
+        input-listen
       ></a-entity>
     </a-entity>
 
@@ -125,20 +173,22 @@
 
     <!-- dynamic body test -->
 
-    <a-box class="cube" dynamic-body position="0 2 -3" width="0.5" height="0.5" depth="0.5" color="red" ></a-box>
+    <a-box class="cube" dynamic-body position="0 2 -1" width="0.5" height="0.5" depth="0.5" color="red" ></a-box>
     
     <a-box
-    position="-1 2 -3"
+    position="-1 1 -2"
     rotation="0 0 0"
     src=""
     color="#4CC3D9"
+    width="5"
+    depth="5"
     static-body
   ></a-box>
     
   <a-box
   class="cube"
   dynamic-body
-  position="-1 4 -3"
+  position="-1 5 -2"
   width="0.5"
   height="0.5"
   depth="0.5"
