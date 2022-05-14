@@ -3,46 +3,39 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Aframe environment</title>
-  <meta name="description" content="Hello, World! - A-Frame">
+  <meta name="authors" content="JudithBente">
+  <title>Aframe environment Judith and Bente</title>
+  <meta name="description" content="Aframe assignment">
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-room-component/dist/aframe-room-component.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <!-- Load local teleport functionality -->
-<script src="teleport.js"></script>
- <!-- Get deprecated three.js functionalty needed for physics -->
-<!-- https://github.com/n5ro/aframe-physics-system/issues/187 -->
-<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
+  <script src="teleport.js"></script>
+  <!-- Get deprecated three.js functionalty needed for physics -->
+  <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
+  <!-- Get aframe physics (needs three.js geometry) -->
+  <script src="//cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v2.1.0/dist/aframe-physics-system.min.js"></script>
 
-<!-- Get aframe physics (needs three.js geometry) -->
-<script src="//cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v2.1.0/dist/aframe-physics-system.min.js"></script>
-
-<!-- Get aframe physics (needs three.js geometry) -->
-<script src="//cdn.jsdelivr.net/gh/donmccurdy/aframe-physics-system@v2.1.0/dist/aframe-physics-system.min.js"></script>
-
-<!-- Load local teleport functionality -->
-<script src="teleport.js"></script>
 
 </head>
 
 <body>
 
-
-
-  <!-- script test console log-->
-
   <script>
-
     // Test phase shift
     AFRAME.registerComponent('phase-shift', {
       init: function () {
         var el = this.el
         el.addEventListener('gripdown', function () {
-          el.setAttribute('collision-filter', { collisionForces: true })
+          el.setAttribute('collision-filter', {
+            collisionForces: true
+          })
         })
         el.addEventListener('gripup', function () {
-          el.setAttribute('collision-filter', { collisionForces: false })
+          el.setAttribute('collision-filter', {
+            collisionForces: false
+          })
         })
       }
     })
@@ -75,7 +68,7 @@
          */
         this.el.addEventListener("thumbstickdown", function (e) {
           console.log("thumbstickdown", e.target.id);
-          this.emit('teleportstart');		// Show the circle
+          this.emit('teleportstart'); // Show the circle
         });
 
         /**
@@ -83,126 +76,83 @@
          * Teleport to the target circle
          */
         this.el.addEventListener("thumbstickup", function (e) {
-          console.log("thumbstickup", e.target.id);                    
-          this.emit('teleportend');		// Jump to circle
+          console.log("thumbstickup", e.target.id);
+          this.emit('teleportend'); // Jump to circle
         });
 
 
-
         this.el.grab = false; // Set grab var to not grabbed
-      this.el.addEventListener("triggerdown", function (e) {
-        console.log("triggerdown", e.target.id);
-        this.grab = true; // Grab something
-      });
-      this.el.addEventListener('tirggerup', function (e) {
-        console.log("TriggerUp", e.target.id);
-        this.grab = false; // Release something
-      });
-        // this.el.addEventListener("hit", function(e){
-        //   console.log("HIT!", e.target.id);
-        //   if( this.grab == true){
-        //     console.log("hit");
-        //     console.log(hitEl.attributes.color);
-        //     hitEl.attributes.color.value = "purple";
-        //     console.log(hitEl.attributes.color);
-        //   }
-        // });
+        this.el.addEventListener("triggerdown", function (e) {
+          console.log("triggerdown", e.target.id);
+          this.grab = true; // Grab something
+        });
+        this.el.addEventListener('tirggerup', function (e) {
+          console.log("TriggerUp", e.target.id);
+          this.grab = false; // Release something
+        });
 
         this.hitEl;
-          this.el.addEventListener("hit", function(e){
-            
-            //haal het element op waar we tegenaan zitten
-            const hitEl = e.detail.el;
-            //check of het element null is
-            if (!hitEl || this.hitEl|| hitEl.attributes.color.value == "purple") { return; }
-            console.log('hit');
-            console.log(hitEl.attributes.color.value);
-            hitEl.attributes.color.value = "purple";
-            console.log(hitEl.attributes.color.value);
-          });
+        this.el.addEventListener("hit", function (e) {
 
-          this.el.grab = false;
+          //haal het element op waar we tegenaan zitten
+          const hitEl = e.detail.el;
+          //check of het element null is
+          if (!hitEl || this.hitEl || hitEl.attributes.color.value == "purple") {
+            return;
+          }
+          console.log('hit');
+          console.log(hitEl.attributes.color.value);
+          hitEl.attributes.color.value = "purple";
+          console.log(hitEl.attributes.color.value);
+        });
+
+        this.el.grab = false;
 
         //Called when trigger is pressed 
         //squeeze button in WebXR debugger
         this.el.addEventListener("triggerdown", function (e) {
           console.log("triggerdown", e.target.id);
-          
+
           //Setting grab flag as true.
           this.grab = true;
         });
-  
+
         //Called when trigger is release 
         //squeeze button in WebXR debugger
         this.el.addEventListener("triggerup", function (e) {
           console.log("triggerup", e.target.id);
-          
+
           //Setting grab flag as false.
           this.grab = false;
-          
+
         });
-
-
-        
-
 
 
       }
 
-      
+
     });
-
-
-    /* test code */
-
-
-    
-
-   
-
-    
-
-
   </script>
 
-
-
-    </script>
-
-
-
-  <!-- controlers -->
-
+  <!-- Adding the controlers and camera -->
 
   <a-scene physics="debug: true">
 
     <a-entity id="cameraRig">
       <a-entity id="head" camera wasd-controls look-controls position="0 1.6 0"></a-entity>
-      <a-entity
-        id="leftController"
-        static-body="shape: sphere; sphereRadius: 0.02;"
-        laser-controls="hand: left"
-        raycaster="lineColor: red; far:2"
-        sphere-collider="objects: .botsen"
-        grab
+      <a-entity id="leftController" static-body="shape: sphere; sphereRadius: 0.02;" laser-controls="hand: left"
+        raycaster="lineColor: red; far:2" sphere-collider="objects: .botsen" grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
-        input-listen
-      ></a-entity>
-      <a-entity
-        id="rightController"
-        static-body="shape: sphere; sphereRadius: 0.02;"
-        laser-controls="hand: right"
-        raycaster="lineColor: red; far:2"
-        sphere-collider="objects: .botsen"
-        grab
+        input-listen></a-entity>
+      <a-entity id="rightController" static-body="shape: sphere; sphereRadius: 0.02;" laser-controls="hand: right"
+        raycaster="lineColor: red; far:2" sphere-collider="objects: .botsen" grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
-        input-listen
-      ></a-entity>
+        input-listen></a-entity>
     </a-entity>
 
 
-   
-    <!-- ophalen assets uit assets folder , meegeven van id om aan te roepen -->
+
+    <!-- Assets directory with files and 3d objects, connecting to directory and find object with same id -->
 
     <a-assets>
 
@@ -219,84 +169,64 @@
     </a-assets>
 
 
-    <!-- opbouw van woning / gebouw (muren, voorkant, dak, achterkant, vloeren) -->
+    <!-- building the room / building (walls, front, roof, back, floor) -->
 
-    <!--zijkant huis-->
-    <a-box src="#boxTexture" position="-2.95259 0.91314 -1.84807" depth="20" width="0.05" height="10" static-body rotation="0 0 0"></a-box>
-    <!--voorkant huis-->
-    <a-box src="#boxTexture" position="4 1 8.18934" depth="0,05" width="14" height="10" static-body rotation="0 0 0"></a-box>
-    <!--zijkant huis-->
-    <a-box src="#boxTexture" position="11 1 -1.81643" depth="20" width="0.05" height="10" static-body rotation="0 0 0"></a-box>
-    <!--achterkant huis-->
-    <a-box src="#boxTexture" position="4 1 -11.85885" depth="0,05" width="14" height="10"  static-body rotation="0 0 0"></a-box>
-    <!--vloer in huis-->
-    <a-plane src="#wood" color="#ffffff" position="4 0.2 -1.82508" rotation="-90 0 0" height="20" width="14" static-body></a-plane>
-    
-    <!-- dak van het huis-->
-    <a-box position="4 6.37283 -1.83315" depth="20" width="14" height="1" rotation="0 0 0" static-body color="#8B8378"></a-box>
+    <!--right-->
+    <a-box src="#boxTexture" position="-2.95259 0.91314 -1.84807" depth="20" width="0.05" height="10" static-body
+      rotation="0 0 0"></a-box>
+    <!--front-->
+    <a-box src="#boxTexture" position="4 1 8.18934" depth="0,05" width="14" height="10" static-body rotation="0 0 0">
+    </a-box>
+    <!--left-->
+    <a-box src="#boxTexture" position="11 1 -1.81643" depth="20" width="0.05" height="10" static-body rotation="0 0 0">
+    </a-box>
+    <!--back-->
+    <a-box src="#boxTexture" position="4 1 -11.85885" depth="0,05" width="14" height="10" static-body rotation="0 0 0">
+    </a-box>
+    <!--floor-->
+    <a-plane src="#wood" color="#ffffff" position="4 0.2 -1.82508" rotation="-90 0 0" height="20" width="14"
+      static-body></a-plane>
 
-    <!-- dynamic body test -->
+    <!-- roof-->
+    <a-box position="4 6.37283 -1.83315" depth="20" width="14" height="1" rotation="0 0 0" static-body color="#8B8378">
+    </a-box>
 
-    <a-box class="botsen" dynamic-body position="0 2 -1" width="0.5" height="0.5" depth="0.5" color="red" ></a-box>
-    
-    <a-box
-    position="-1 1 -2"
-    rotation="0 0 0"
-    src=""
-    color="#4CC3D9"
-    width="5"
-    depth="5"
-    static-body
-    class="botsen"
-  ></a-box>
-    
-  <a-box
-  class="botsen"
-  dynamic-body
-  position="-1 5 -2"
-  width="0.5"
-  height="0.5"
-  depth="0.5"
-  color="green"
-></a-box>
+    <!-- insert dynamic body objects -->
 
-<!-- test objecten -->
+    <a-box class="botsen" dynamic-body position="0 2 -1" width="0.5" height="0.5" depth="0.5" color="red"></a-box>
 
-<a-box position="-1 2 -3" rotation="0 45 0" color="#4CC3D9" dynamic-body="shape: box; mass: 1" class="botsen"></a-box> 
-      <a-sphere position="0 2 -3" radius="1.25" color="#EF2D5E" dynamic-body="shape: box; mass: 1" class="botsen"></a-sphere>
+    <a-box position="-1 1 -2" rotation="0 0 0" src="" color="#4CC3D9" width="5" depth="5" static-body class="botsen">
+    </a-box>
 
-    <!-- inladen van environment forest, gepersonaliseerd naar alleen kleuren en grondoppervlak -->
+    <a-box class="botsen" dynamic-body position="-1 5 -2" width="0.5" height="0.5" depth="0.5" color="green"></a-box>
+
+    <!-- test objects -->
+
+    <a-box position="-1 2 -3" rotation="0 45 0" color="#4CC3D9" dynamic-body="shape: box; mass: 1" class="botsen">
+    </a-box>
+    <a-sphere position="0 2 -3" radius="1.25" color="#EF2D5E" dynamic-body="shape: box; mass: 1" class="botsen">
+    </a-sphere>
+
+    <!-- load enviornment forest, customized with color and ground/plane -->
 
     <a-entity environment="preset: forest; dressing:none; ground:flat; groundTexture:walkernoise; ligtPosition:1">
     </a-entity>
 
-    <!-- inladen en positioneren van 3d objecten (opgehaald door #id van asset mee te geven)-->
+    <!-- loading and positioning 3d objects by #id -->
 
-    <a-entity gltf-model="#couch" scale="0.008 0.008 0.008" position="-1.42718 0.5 -19.92022" rotation="0 90 0"></a-entity>
+    <a-entity gltf-model="#couch" scale="0.008 0.008 0.008" position="-1.42718 0.5 -19.92022" rotation="0 90 0">
+    </a-entity>
     <a-entity gltf-model="#table" scale="0.03 0.03 0.03" position="-1.5 0.2 4" rotation="0 0 0"></a-entity>
     <a-entity gltf-model="#carpet" scale="2.4 2.4 2.4" position="0 0.2 4" rotation="0 90 0"></a-entity>
     <a-entity gltf-model="#bookshelf" scale="0.8 0.8 0.8" position="3 0.2 5" rotation="0 90 0"></a-entity>
     <a-entity gltf-model="#tv" scale="0.1 0.1 0.1" position="1.79967 0.17502 4.00489" rotation="0 270 0"></a-entity>
 
-  
 
-    
+
+
   </a-scene>
-
-
-  <!-- link naar extern javascript file -->
-
-
- 
 
 
 </body>
 
 </html>
-
-
-
-
-
-
-
