@@ -8,10 +8,11 @@
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-room-component/dist/aframe-room-component.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
   <!-- Load local teleport functionality -->
 <script src="teleport.js"></script>
   <!-- script for physics -->
-  <!-- Get deprecated three.js functionalty needed for physics -->
+<!-- Get deprecated three.js functionalty needed for physics -->
 <!-- https://github.com/n5ro/aframe-physics-system/issues/187 -->
 <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r134/examples/js/deprecated/Geometry.js"></script>
 
@@ -22,77 +23,73 @@
 
 <body>
 
-  <!-- script js code -->
+
+
+  <!-- script test console log-->
+
   <script>
+    AFRAME.registerComponent("input-listen", {
+      init: function () {
+        //Called when trigger is pressed 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggerdown", function (e) {
+          console.log("triggerdown", e.target.id);
+        });
+        this.el.addEventListener("triggerup", function (e) {
+          console.log("triggerup", e.target.id);
+        });
 
-AFRAME.registerComponent('on-click-demo', {
-    init: function () {
-        // Init needed variables
-    // Add event listner
-    this.el.addEventListener('click', function (evt) {
-      console.log('I was clicked at: ', evt.detail.intersection.point);
-      // Add more code on click
+    
+        //Called when thumbstickchanged  
+        //select button in WebXR debugger
+        this.el.addEventListener("thumbstickchanged", function (e) {
+          console.log("thumbstickchanged", e.target.id);
+        });
+          }
     });
-    }
-});
 
-this.el.grab = false; // Set grab var to not grabbed
-      this.el.addEventListener("triggerdown", function (e) {
-        console.log("triggerdown", e.target.id);
-        this.grab = true; // Grab something
-      });
-      this.el.addEventListener('tirggerup', function (e) {
-        console.log("TriggerUp", e.target.id);
-        this.grab = false; // Release something
-      });
+    
+        
+        
 
-  /**
- * Listen to thumbstickdown event
- * Show a target circle
- */
-this.el.addEventListener("thumbstickdown", function (e) {
-    console.log("thumbstickdown", e.target.id);
-    this.emit('teleportstart');    // Show the circle
- });
 
-/**
- * Listen to thumbstickup event
- * Teleport to the target circle
- */
-this.el.addEventListener("thumbstickup", function (e) {
-    console.log("thumbstickup", e.target.id);
-    this.emit('teleportend');    // Jump to circle
-});
+    </script>
 
-  </script>
 
-  <a-scene>
 
-    <!-- controls -->
+  <!-- controlers -->
+
+
+  <a-scene physics="debug: true">
+
     <a-entity id="cameraRig">
       <a-entity id="head" camera wasd-controls look-controls position="0 1.6 0"></a-entity>
       <a-entity
         id="leftController"
+        input-listen
         static-body="shape: sphere; sphereRadius: 0.02;"
         laser-controls="hand: left"
         raycaster="lineColor: red; far:2"
         sphere-collider="objects: .throwable"
         grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
-        input-listen
+        
       ></a-entity>
       <a-entity
         id="rightController"
+        input-listen
         static-body="shape: sphere; sphereRadius: 0.02;"
         laser-controls="hand: right"
         raycaster="lineColor: red; far:2"
         sphere-collider="objects: .throwable"
         grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
-        input-listen
+      
       ></a-entity>
     </a-entity>
 
+
+   
     <!-- ophalen assets uit assets folder , meegeven van id om aan te roepen -->
 
     <a-assets>
@@ -113,23 +110,40 @@ this.el.addEventListener("thumbstickup", function (e) {
     <!-- opbouw van woning / gebouw (muren, voorkant, dak, achterkant, vloeren) -->
 
     <!--zijkant huis-->
-    <a-box src="#boxTexture" position="-2.95259 0.91314 -1.84807" depth="20" width="0.05" height="10" rotation="0 0 0"></a-box>
+    <a-box src="#boxTexture" position="-2.95259 0.91314 -1.84807" depth="20" width="0.05" height="10" static-body rotation="0 0 0"></a-box>
     <!--voorkant huis-->
-    <a-box src="#boxTexture" position="4 1 8.18934" depth="0,05" width="14" height="10" rotation="0 0 0"></a-box>
+    <a-box src="#boxTexture" position="4 1 8.18934" depth="0,05" width="14" height="10" static-body rotation="0 0 0"></a-box>
     <!--zijkant huis-->
-    <a-box src="#boxTexture" position="11 1 -1.81643" depth="20" width="0.05" height="10" rotation="0 0 0"></a-box>
+    <a-box src="#boxTexture" position="11 1 -1.81643" depth="20" width="0.05" height="10" static-body rotation="0 0 0"></a-box>
     <!--achterkant huis-->
-    <a-box src="#boxTexture" position="4 1 -11.85885" depth="0,05" width="14" height="10" rotation="0 0 0"></a-box>
+    <a-box src="#boxTexture" position="4 1 -11.85885" depth="0,05" width="14" height="10"  static-body rotation="0 0 0"></a-box>
     <!--vloer in huis-->
-    <a-plane src="#wood" color="#ffffff" position="4 0.001 -1.82508" rotation="-90 0 0" height="20" width="14"></a-plane>
+    <a-plane src="#wood" color="#ffffff" position="4 0.2 -1.82508" rotation="-90 0 0" height="20" width="14" static-body></a-plane>
     
     <!-- dak van het huis-->
-    <a-box position="4 6.37283 -1.83315" depth="20" width="14" height="1" rotation="0 0 0" color="#8B8378"></a-box>
+    <a-box position="4 6.37283 -1.83315" depth="20" width="14" height="1" rotation="0 0 0" static-body color="#8B8378"></a-box>
 
     <!-- dynamic body test -->
 
-    <a-box position="0 0 -5" rotation="0 0 0" static-body class="on-click-demo"></a-box>
+    <a-box class="cube" dynamic-body position="0 2 -3" width="0.5" height="0.5" depth="0.5" color="red" ></a-box>
     
+    <a-box
+    position="-1 2 -3"
+    rotation="0 0 0"
+    src=""
+    color="#4CC3D9"
+    static-body
+  ></a-box>
+    
+  <a-box
+  class="cube"
+  dynamic-body
+  position="-1 4 -3"
+  width="0.5"
+  height="0.5"
+  depth="0.5"
+  color="green"
+></a-box>
 
     <!-- inladen van environment forest, gepersonaliseerd naar alleen kleuren en grondoppervlak -->
 
