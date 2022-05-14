@@ -107,7 +107,49 @@
         //     console.log(hitEl.attributes.color);
         //   }
         // });
+
+        this.hitEl;
+          this.el.addEventListener("hit", function(e){
+            
+            //haal het element op waar we tegenaan zitten
+            const hitEl = e.detail.el;
+            //check of het element null is
+            if (!hitEl || this.hitEl|| hitEl.attributes.color.value == "purple") { return; }
+            console.log('hit');
+            console.log(hitEl.attributes.color.value);
+            hitEl.attributes.color.value = "purple";
+            console.log(hitEl.attributes.color.value);
+          });
+
+          this.el.grab = false;
+
+        //Called when trigger is pressed 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggerdown", function (e) {
+          console.log("triggerdown", e.target.id);
+          
+          //Setting grab flag as true.
+          this.grab = true;
+        });
+  
+        //Called when trigger is release 
+        //squeeze button in WebXR debugger
+        this.el.addEventListener("triggerup", function (e) {
+          console.log("triggerup", e.target.id);
+          
+          //Setting grab flag as false.
+          this.grab = false;
+          
+        });
+
+
+        
+
+
+
       }
+
+      
     });
 
 
@@ -151,7 +193,7 @@
         static-body="shape: sphere; sphereRadius: 0.02;"
         laser-controls="hand: right"
         raycaster="lineColor: red; far:2"
-        sphere-collider="objects: .throwable"
+        sphere-collider="objects: .botsen"
         grab
         teleport-controls="cameraRig: #cameraRig; teleportOrigin: #head; startEvents: teleportstart; endEvents: teleportend;"
         input-listen
@@ -195,7 +237,7 @@
 
     <!-- dynamic body test -->
 
-    <a-box class="collidable" dynamic-body position="0 2 -1" width="0.5" height="0.5" depth="0.5" color="red" ></a-box>
+    <a-box class="botsen" dynamic-body position="0 2 -1" width="0.5" height="0.5" depth="0.5" color="red" ></a-box>
     
     <a-box
     position="-1 1 -2"
@@ -205,10 +247,11 @@
     width="5"
     depth="5"
     static-body
+    class="botsen"
   ></a-box>
     
   <a-box
-  class="collidable"
+  class="botsen"
   dynamic-body
   position="-1 5 -2"
   width="0.5"
@@ -219,8 +262,8 @@
 
 <!-- test objecten -->
 
-<a-box position="-1 2 -3" rotation="0 45 0" color="#4CC3D9" dynamic-body="shape: box; mass: 1" class="collidable"></a-box>
-      <a-sphere position="0 4 -5" radius="1.25" color="#EF2D5E" dynamic-body="shape: box; mass: 1" class="collidable"></a-sphere>
+<a-box position="-1 2 -3" rotation="0 45 0" color="#4CC3D9" dynamic-body="shape: box; mass: 1" class="botsen"></a-box> 
+      <a-sphere position="0 2 -3" radius="1.25" color="#EF2D5E" dynamic-body="shape: box; mass: 1" class="botsen"></a-sphere>
 
     <!-- inladen van environment forest, gepersonaliseerd naar alleen kleuren en grondoppervlak -->
 
