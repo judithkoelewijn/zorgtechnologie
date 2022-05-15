@@ -167,7 +167,15 @@
       <a-asset-items id="tv" src="assets/television/scene.gltf"></a-asset-items>
       <a-asset-items id="wood" src="assets/wood.jpg"></a-asset-items>
       <a-asset-items id="painting" src="assets/painting/scene.gltf"></a-asset-items>
-  
+      <a-asset-items id="paint2" src="assets/paint2/scene.gltf"></a-asset-items>
+      <a-asset-items id="kitchen" src="assets/grond.jpeg"></a-asset-items>
+      <a-asset-items id="oven" src="assets/oven/scene.gltf"></a-asset-items>
+      <a-asset-items id="refrigerator" src="assets/refrigerator/scene.gltf"></a-asset-items>
+      <a-asset-items id="thermo" src="assets/thermo/scene.gltf"></a-asset-items>
+      <a-asset-items id="dinner" src="assets/dinner/scene.gltf"></a-asset-items>
+      <a-asset-items id="3dog" src="assets/3dog/scene.gltf"></a-asset-items>
+      <a-asset-items id="window" src="assets/w-indow/scene.gltf"></a-asset-items>
+      
 
     </a-assets>
 
@@ -187,8 +195,9 @@
 
     
     <!--back-->
-    <a-box src="#boxTexture" position="4 1 -11.85885" depth="0,05" width="14" height="10" static-body rotation="0 0 0">
+    <a-box src="#boxTexture" position="4 1 -9.198" depth="0,05" width="14" height="10" static-body rotation="0 0 0">
     </a-box>
+  
     <!--floor-->
    
 
@@ -198,32 +207,26 @@
 
     <!-- insert dynamic body objects -->
 
-    <a-box class="botsen" dynamic-body position="0 2 -1" width="0.5" height="0.5" depth="0.5" color="red"></a-box>
-
-    <a-box src="#wood" position="4.05465 -0.2 -5.38393" rotation="0 0 0" src="" color="#ffffff" width="14" depth="13.2" height="1" static-body class="botsen">
+    <a-box src="#kitchen" class="botsen" static-body position="-0.00051 0.76 -8.4272" width="6" height="1" depth="1.2" color="#e7e7e7"></a-box>
+   
+    <a-box src="#wood" position="4.05465 -0.2 -5.38393" rotation="0 0 0"  color="#ffffff" width="14" depth="13.2" height="1" static-body class="botsen">
     
       </a-box>
 
    
-    
-    
-   
-  
 
-    <a-box class="botsen" dynamic-body position="-1 5 -2" width="0.5" height="0.5" depth="0.5" color="green"></a-box>
+    <a-box position="3.54319 0.8 -8.40517" width="1" height="1" depth="1.2" rotation="0 0 0" color="#4CC3D9" static-body class="botsen">
 
-    <!-- test objects -->
-
-    <a-box position="-1 2 -3" rotation="0 45 0" color="#4CC3D9" dynamic-body="shape: box; mass: 1" class="botsen">
-      
     </a-box>
 
     
 
-
-
-    <a-sphere position="0 2 -8.966" radius="1.25" color="#EF2D5E" dynamic-body="shape: box; mass: 1" class="botsen">
+    <a-sphere position="0.00044 0.675 -4.35334" radius="1.25" scale="0.3 0.3 0.3" color="#4CC3D9" dynamic-body="shape: box; mass: 1" class="botsen">
     </a-sphere>
+
+   
+
+
 
     <!-- load enviornment forest, customized with color and ground/plane -->
 
@@ -239,9 +242,16 @@
     <a-entity gltf-model="#bookshelf" scale="0.8 0.8 0.8" position="3 0.2 -1.26701" rotation="0 90 0"></a-entity>
     <a-entity gltf-model="#tv" scale="0.1 0.1 0.1" position="1.79967 0.17502 -2.21929" rotation="0 270 0"></a-entity>
     <a-entity gltf-model="#painting" scale="0.02 0.02 0.02" position="-2.91335 2 -1.47327"></a-entity>
-  
+    <a-entity gltf-model="#paint2" scale="0.1 0.1 0.1" position="10.54894 1.21313 -6.460" rotation="0 -90 0"></a-entity>
    
+    <a-entity gltf-model="#oven" scale="0.002 0.002 0.002"  position="4.62298 0.459 -8.29124"></a-entity>
+    <a-entity gltf-model="#refrigerator" scale="0.012 0.012 0.012" position="5.68053 0.22412 -7.74515"></a-entity>
+    <a-entity gltf-model="#thermo" scale="0.01 0.01 0.01" position="-2.41932 1.0611 -8.8368"></a-entity>
+    <a-entity gltf-model="#dinner" scale="0.009 0.009 0.009" position="8.49775 0.30135 -5.13014" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#3dog"scale="0.006 0.006 0.006" position="5.35479 0.34701 -4.05841" rotation="270 0 0" animation="property: rotation; to: 0 0 360; dur: 3000; easing: linear; loop: true"></a-entity>
+    <a-entity gltf-model="#window" scale="0.03 0.03 0.03" position="-2.53312 2.13775 -8.83597" rotation="" ></a-entity>
 
+   
   </a-scene>
 
 
